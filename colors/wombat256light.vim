@@ -1,96 +1,139 @@
-" Vim color file
-" Original Maintainer:  Lars H. Nielsen (dengmao@gmail.com)
-" Last Change:  2010-07-23
-"
-" Modified version of wombat for 256-color terminals by
-"   David Liang (bmdavll@gmail.com)
-" based on version by
-"   Danila Bespalov (danila.bespalov@gmail.com)
+" Templated Wombat color scheme
+" Original theme by Lars Nielsen
+" Some things taken from morhetz/gruvbox
 
-set background=dark
+" Initialization: {{{
+
+set background=light
 
 if version > 580
-	hi clear
-	if exists("syntax_on")
-		syntax reset
-	endif
+  hi clear
+  if exists("syntax_on")
+    syntax reset
+  endif
 endif
 
-let colors_name = "wombat256light"
+if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
+  finish
+endif
 
+" }}}
+" Pallette: {{{
 
-" General colors
-hi Normal guifg=#080808 guibg=#e3e0d7 guisp=#e3e0d7 gui=NONE ctermfg=232 ctermbg=254 cterm=NONE
-hi Cursor guifg=#e3e0d7 guibg=#242424 guisp=#242424 gui=NONE ctermfg=254 ctermbg=235 cterm=NONE
-hi Visual guifg=#c3c6ca guibg=#554d4b guisp=#554d4b gui=NONE ctermfg=251 ctermbg=240 cterm=NONE
-hi VisualNOS guifg=#c3c6ca guibg=#303030 guisp=#303030 gui=NONE ctermfg=251 ctermbg=236 cterm=NONE
-hi Search guifg=#080808 guibg=#d787ff guisp=#d787ff gui=NONE ctermfg=232 ctermbg=177 cterm=NONE
-hi Folded guifg=#a0a8b0 guibg=#3a4046 guisp=#3a4046 gui=NONE ctermfg=103 ctermbg=238 cterm=NONE
-hi Title guifg=#969600 guibg=NONE guisp=NONE gui=bold ctermfg=100 ctermbg=NONE cterm=bold
-hi StatusLine guifg=#080808 guibg=#c8c8c8 guisp=#c8c8c8 gui=italic ctermfg=232 ctermbg=251 cterm=NONE
-hi VertSplit guifg=#444444 guibg=#444444 guisp=#444444 gui=NONE ctermfg=238 ctermbg=238 cterm=NONE
-hi StatusLineNC guifg=#857b6f guibg=#444444 guisp=#444444 gui=NONE ctermfg=101 ctermbg=238 cterm=NONE
-hi LineNr guifg=#857b6f guibg=#080808 guisp=#080808 gui=NONE ctermfg=101 ctermbg=232 cterm=NONE
-hi SpecialKey guifg=#626262 guibg=#2b2b2b guisp=#2b2b2b gui=NONE ctermfg=241 ctermbg=235 cterm=NONE
-hi WarningMsg guifg=#ff5f55 guibg=NONE guisp=NONE gui=NONE ctermfg=203 ctermbg=NONE cterm=NONE
-hi ErrorMsg guifg=#721e14 guibg=NONE guisp=NONE gui=bold ctermfg=3 ctermbg=NONE cterm=bold
+let s:wombat = {}
+let s:wombat.bold='bold'
+if has('gui_running') || $TERM_ITALICS == 'true'
+  let s:wombat.italic='italic'
+else
+  let s:wombat.italic='none'
+endif
+let s:wombat.none=['NONE', 'NONE']
+let s:wombat.black=['#242424', 234]
+let s:wombat.lightblack=['#32322f', 236]
+let s:wombat.lighterblack=['#444444', 238]
+let s:wombat.darkblack=['#080808', 232]
+let s:wombat.light=['#c3c6ca', 251]
+let s:wombat.lighter=['#e3e0d7', 252]
+let s:wombat.blue=['#0a448e', 24]
+let s:wombat.green=['#5c7b15', 64]
+let s:wombat.lightgreen=['#666a21', 58]
+let s:wombat.darkgreen=['#396b11', 58]
+let s:wombat.lightyellow=['#ffffd7', 230]
+let s:wombat.yellow=['#816e21', 94]
+let s:wombat.red=['#880800', 88]
+let s:wombat.lightred=['#721d14', 52]
+let s:wombat.darkred=['#720003', 52]
+let s:wombat.gray=['#3f3d37', 237]
+let s:wombat.lightgray=['#b7bdc3', 250]
+let s:wombat.darkgray=['#857b6f', 241]
+let s:wombat.darkergray=['#837774', 243]
+let s:wombat.pink=['#d787ff', 177]
+let s:wombat.darkpink=['#73186e', 53]
+let s:wombat.purple=['#2a0d6a', 17]
+let s:wombat.lightpurple=['#3e3969', 60]
+let s:wombat.darkpurple=['#382a37', 237]
 
-" Vim >= 7.0 specific colors
+" }}}
+" Highlight Function: {{{
+
+function! s:HL(group, fg, ...)
+  " Arguments: group, guifg, guibg, gui, guisp
+
+  let fg = a:fg
+
+  if a:0 >= 1
+    let bg = a:1
+  else
+    let bg = s:wombat.none
+  endif
+
+  if a:0 >= 2 && strlen(a:2)
+    let emstr = a:2
+  else
+    let emstr = 'none'
+  endif
+
+  let histring = [ 'hi', a:group,
+        \ 'guifg=' . fg[0], 'ctermfg=' . fg[1],
+        \ 'guibg=' . bg[0], 'ctermbg=' . bg[1],
+        \ 'gui=' . emstr, 'cterm=' . emstr
+        \ ]
+
+  execute join(histring, ' ')
+endfunction
+
+" }}}
+" Apply Colors: {{{
+
+call s:HL('Normal', s:wombat.darkblack, s:wombat.lighter)
+call s:HL('Cursor', s:wombat.lighter, s:wombat.black)
+call s:HL('Visual', s:wombat.black, s:wombat.lightgray)
+call s:HL('VisualNOS', s:wombat.light, s:wombat.darkblack)
+call s:HL('Search', s:wombat.lighterblack, s:wombat.pink)
+call s:HL('Folded', s:wombat.lightgray, s:wombat.darkblack)
+call s:HL('Title', s:wombat.lightyellow, s:wombat.none, s:wombat.bold)
+call s:HL('StatusLine', s:wombat.black, s:wombat.lightgray)
+call s:HL('VertSplit', s:wombat.light, s:wombat.light)
+call s:HL('StatusLineNC', s:wombat.light, s:wombat.darkgray)
+call s:HL('LineNr', s:wombat.darkgray, s:wombat.light)
+call s:HL('SignColumn', s:wombat.none, s:wombat.light)
+call s:HL('SpecialKey', s:wombat.darkgray, s:wombat.light)
+call s:HL('WarningMsg', s:wombat.red)
+call s:HL('ErrorMsg', s:wombat.darkred)
+
 if version >= 700
-hi CursorLine guifg=NONE guibg=#32322f guisp=#32322f gui=NONE ctermfg=NONE ctermbg=236 cterm=NONE
-hi MatchParen guifg=#eae788 guibg=#857b6f guisp=#857b6f gui=bold ctermfg=186 ctermbg=101 cterm=bold
-hi PMenu guifg=#080808 guibg=#c8c8c8 guisp=#c8c8c8 gui=NONE ctermfg=232 ctermbg=251 cterm=NONE
-hi PMenuSel guifg=#e3e0d7 guibg=#5c7b15 guisp=#5c7b15 gui=NONE ctermfg=254 ctermbg=64 cterm=NONE
+  call s:HL('CursorLine', s:wombat.none, s:wombat.light)
+  call s:HL('MatchParen', s:wombat.lighter, s:wombat.darkgray)
+  call s:HL('Pmenu', s:wombat.black, s:wombat.lightgray)
+  call s:HL('PmenuSel', s:wombat.lighter, s:wombat.darkgreen)
+
+  hi! link CursorLineNr CursorLine
 endif
 
-" Diff highlighting
-hi DiffAdd guifg=NONE guibg=#9a73ed guisp=#9a73ed gui=NONE ctermfg=NONE ctermbg=141 cterm=NONE
-hi DiffDelete guifg=#242424 guibg=#3e3969 guisp=#3e3969 gui=NONE ctermfg=235 ctermbg=60 cterm=NONE
-hi DiffText guifg=NONE guibg=#e584e0 guisp=#e584e0 gui=NONE ctermfg=NONE ctermbg=176 cterm=NONE
-hi DiffChange guifg=NONE guibg=#b8a0b6 guisp=#b8a0b6 gui=NONE ctermfg=NONE ctermbg=250 cterm=NONE
+call s:HL('Keyword', s:wombat.blue)
+call s:HL('Statement', s:wombat.blue)
+call s:HL('Constant', s:wombat.lightred)
+call s:HL('Number', s:wombat.lightred)
+call s:HL('PreProc', s:wombat.lightred)
+call s:HL('Function', s:wombat.green)
+call s:HL('Identifier', s:wombat.green)
+call s:HL('Type', s:wombat.lightgreen)
+call s:HL('Special', s:wombat.yellow)
+call s:HL('String', s:wombat.darkgreen, s:wombat.none, s:wombat.italic)
+call s:HL('Comment', s:wombat.gray, s:wombat.none, s:wombat.italic)
+call s:HL('Todo', s:wombat.darkgray, s:wombat.lightyellow, s:wombat.bold)
+call s:HL('NonText', s:wombat.darkgray, s:wombat.lighter)
 
-"hi CursorIM
-"hi Directory
-"hi IncSearch
-"hi Menu
-"hi ModeMsg
-"hi MoreMsg
-"hi PmenuSbar
-"hi PmenuThumb
-"hi Question
-"hi Scrollbar
-"hi SignColumn
-"hi SpellBad
-"hi SpellCap
-"hi SpellLocal
-"hi SpellRare
-"hi TabLine
-"hi TabLineFill
-"hi TabLineSel
-"hi Tooltip
-"hi User1
-"hi User9
-"hi WildMenu
+call s:HL('DiffAdd', s:wombat.none, s:wombat.purple)
+call s:HL('DiffDelete', s:wombat.none, s:wombat.lightpurple)
+call s:HL('DiffText', s:wombat.none, s:wombat.darkpink)
+call s:HL('DiffChange', s:wombat.none, s:wombat.darkpurple)
 
+hi! link SignColumn LineNr
+hi! link FoldColumn Folded
+hi! link CursorColumn CursorLine
+hi! link IncSearch Search
 
-" Syntax highlighting
-hi Keyword guifg=#0a438e guibg=NONE guisp=NONE gui=NONE ctermfg=24 ctermbg=NONE cterm=NONE
-hi Statement guifg=#0a438e guibg=NONE guisp=NONE gui=NONE ctermfg=24 ctermbg=NONE cterm=NONE
-hi Constant guifg=#721e14 guibg=NONE guisp=NONE gui=NONE ctermfg=3 ctermbg=NONE cterm=NONE
-hi Number guifg=#721e14 guibg=NONE guisp=NONE gui=NONE ctermfg=3 ctermbg=NONE cterm=NONE
-hi PreProc guifg=#721e14 guibg=NONE guisp=NONE gui=NONE ctermfg=3 ctermbg=NONE cterm=NONE
-hi Function guifg=#5c7b15 guibg=NONE guisp=NONE gui=NONE ctermfg=64 ctermbg=NONE cterm=NONE
-hi Identifier guifg=#5c7b15 guibg=NONE guisp=NONE gui=NONE ctermfg=64 ctermbg=NONE cterm=NONE
-hi Type guifg=#666a21 guibg=NONE guisp=NONE gui=NONE ctermfg=58 ctermbg=NONE cterm=NONE
-hi Special guifg=#816e21 guibg=NONE guisp=NONE gui=NONE ctermfg=3 ctermbg=NONE cterm=NONE
-hi String guifg=#3a6b11 guibg=NONE guisp=NONE gui=italic ctermfg=22 ctermbg=NONE cterm=NONE
-hi Comment guifg=#3f3d37 guibg=NONE guisp=NONE gui=italic ctermfg=237 ctermbg=NONE cterm=NONE
-hi Todo guifg=#ac630a guibg=NONE guisp=NONE gui=italic ctermfg=130 ctermbg=NONE cterm=NONE
+" }}}
 
-
-" Links
-hi! link FoldColumn		Folded
-hi! link CursorColumn	CursorLine
-hi! link NonText		LineNr
-
-" vim:set ts=4 sw=4 noet:
+let g:airline_theme='silver'

@@ -58,7 +58,7 @@ function! wombat#refresh()
 
   let s:wombat.none=['NONE', 'NONE']
   if s:wombat_bg == 'dark'
-    let s:wombat.background=['#242424', 233]
+    let s:wombat.background=['#242424', 235]
     let s:wombat.altbackground=['#444444', 238]
     let s:wombat.altbackground2=['#080808', 232]
     let s:wombat.foreground=['#e3e0d7', 253]
@@ -86,7 +86,7 @@ function! wombat#refresh()
     let s:wombat.background=['#e3e0d7', 253]
     let s:wombat.altbackground=['#b2b2b2', 249]
     let s:wombat.altbackground2=['#c8c8c8', 251]
-    let s:wombat.foreground=['#242424', 233]
+    let s:wombat.foreground=['#242424', 235]
     let s:wombat.altforeground=['#444444', 238]
     let s:wombat.altforeground2=['#080808', 232]
     let s:wombat.dimforeground=['#999999', 247]

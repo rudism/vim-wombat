@@ -136,4 +136,6 @@ hi! link IncSearch Search
 
 " }}}
 
-let g:airline_theme='silver'
+if !exists('g:airline_theme')
+  let g:airline_theme='silver'
+endif

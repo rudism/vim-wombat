@@ -133,7 +133,10 @@ hi! link SignColumn LineNr
 hi! link FoldColumn Folded
 hi! link CursorColumn CursorLine
 hi! link IncSearch Search
+hi! link Directory Keyword
 
 " }}}
 
-let g:airline_theme='wombat'
+if !exists('g:airline_theme')
+  let g:airline_theme='wombat'
+endif

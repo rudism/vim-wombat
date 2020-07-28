@@ -28,12 +28,12 @@ else
   let s:wombat.italic='none'
 endif
 let s:wombat.none=['NONE', 'NONE']
+let s:wombat.background=['#e3e0d7', 253]
+let s:wombat.altbackground=['#b2b2b2', 249]
+let s:wombat.altbackground2=['#c8c8c8', 251]
 let s:wombat.foreground=['#242424', 233]
 let s:wombat.altforeground=['#444444', 238]
 let s:wombat.altforeground2=['#080808', 232]
-let s:wombat.altbackground=['#ffffd7', 230]
-let s:wombat.background=['#e3e0d7', 253]
-let s:wombat.altbackground2=['#c8c8c8', 251]
 let s:wombat.dimforeground=['#999999', 247]
 let s:wombat.cursorbg=['#eeeeee', 255]
 let s:wombat.highlight=['#c3c6ca', 251]
@@ -89,7 +89,7 @@ call s:HL('Normal', s:wombat.foreground, s:wombat.background)
 call s:HL('Cursor', s:wombat.background, s:wombat.highlight)
 call s:HL('Visual', s:wombat.highlight, s:wombat.highlight2)
 call s:HL('VisualNOS', s:wombat.foreground, s:wombat.altbackground2)
-call s:HL('Search', s:wombat.altbackground, s:wombat.pink)
+call s:HL('Search', s:wombat.pink, s:wombat.altbackground)
 call s:HL('Folded', s:wombat.altcomment, s:wombat.altbackground2)
 call s:HL('Title', s:wombat.altforeground2, s:wombat.none, s:wombat.bold)
 call s:HL('StatusLine', s:wombat.altforeground2, s:wombat.altbackground)

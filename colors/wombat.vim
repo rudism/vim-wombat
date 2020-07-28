@@ -16,16 +16,17 @@ function! s:HL(group, fg, ...)
     let bg = s:wombat.none
   endif
 
-  if a:0 >= 2 && strlen(a:2)
+  if a:0 >= 2
     let emstr = a:2
   else
-    let emstr = 'none'
+    let emstr = s:wombat.noem
   endif
 
   let histring = [ 'hi', a:group,
         \ 'guifg=' . fg[0], 'ctermfg=' . fg[1],
         \ 'guibg=' . bg[0], 'ctermbg=' . bg[1],
-        \ 'gui=' . emstr, 'cterm=' . emstr
+        \ 'gui=' . emstr[0], 'guisp=' . emstr[1],
+        \ 'cterm=' . emstr[2]
         \ ]
 
   execute join(histring, ' ')
@@ -47,13 +48,6 @@ function! wombat#refresh()
 
   if !(has('termguicolors') && &termguicolors) && !has('gui_running') && &t_Co != 256
     finish
-  endif
-
-  let s:wombat.bold='bold'
-  if has('gui_running') || $TERM_ITALICS == 'true'
-    let s:wombat.italic='italic'
-  else
-    let s:wombat.italic='none'
   endif
 
   let s:wombat.none=['NONE', 'NONE']
@@ -109,6 +103,16 @@ function! wombat#refresh()
     let s:wombat.diffchange=['#396b11', 193]
   endif
 
+  " gui, guisp, cterm
+  let s:wombat.noem=['NONE', 'NONE', 'NONE']
+  let s:wombat.bold=['bold', 'NONE', 'bold']
+  let s:wombat.undercurl=['undercurl', s:wombat.error[0], 'inverse']
+  if has('gui_running') || $TERM_ITALICS == 'true'
+    let s:wombat.italic=['italic', 'NONE', 'italic']
+  else
+    let s:wombat.italic=['italic', 'NONE', 'NONE']
+  endif
+
   call s:HL('Normal', s:wombat.foreground, s:wombat.background)
   call s:HL('Cursor', s:wombat.background, s:wombat.highlight)
   call s:HL('Visual', s:wombat.highlight, s:wombat.highlight2)
@@ -124,6 +128,7 @@ function! wombat#refresh()
   call s:HL('SpecialKey', s:wombat.dimforeground, s:wombat.background)
   call s:HL('WarningMsg', s:wombat.warning)
   call s:HL('ErrorMsg', s:wombat.error)
+  call s:HL('Error', s:wombat.none, s:wombat.none, s:wombat.undercurl)
 
   if version >= 700
     call s:HL('CursorLine', s:wombat.none, s:wombat.cursorbg)

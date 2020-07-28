@@ -19,9 +19,15 @@ colo wombat
 
 ![wombat-light](https://user-images.githubusercontent.com/4787751/88708664-9b49b100-d0d9-11ea-8536-a3d30e13350d.png)
 
-If you use [vim-airline](https://github.com/vim-airline/vim-airline) and [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) then this plugin will use the `wombat` theme for dark mode and `silver` for light mode. To customize you can override some variables. For example:
+If you use [vim-airline](https://github.com/vim-airline/vim-airline) and [vim-airline-themes](https://github.com/vim-airline/vim-airline-themes) then this plugin will use the `wombat` theme for dark mode and `silver` for light mode.
+
+If you use [fzf.vim](https://github.com/junegunn/fzf.vim) and have [bat](https://github.com/sharkdp/bat) installed for previews, this plugin will use light and dark variants of the `Monokai Extended` theme in the previews.
+
+To customize these ancillary themes you can override some variables. For example:
 
 ```vim
 let g:wombat_airline_theme_dark='wombat'
 let g:wombat_airline_theme_light='solarized'
+let g:wombat_bat_theme_dark='zenburn'
+let g:wombat_bat_theme_light='GitHub'
 ```

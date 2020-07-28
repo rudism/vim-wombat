@@ -35,6 +35,8 @@ function! wombat#refresh()
   let s:wombat_bg = get(g:, 'wombat_bg', &background)
   let s:wombat_airline_theme_dark = get(g:, 'wombat_airline_theme_dark', 'wombat')
   let s:wombat_airline_theme_light = get(g:, 'wombat_airline_theme_light', 'silver')
+  let s:wombat_bat_theme_dark = get(g:, 'wombat_bat_theme_dark', 'Monokai Extended Origin')
+  let s:wombat_bat_theme_light = get(g:, 'wombat_bat_theme_light', 'Monokai Extended Light')
 
   if version > 580
     hi clear
@@ -159,8 +161,10 @@ function! wombat#refresh()
 
   if s:wombat_bg == 'dark'
     let g:airline_theme=s:wombat_airline_theme_dark
+    let $BAT_THEME=s:wombat_bat_theme_dark
   else
     let g:airline_theme=s:wombat_airline_theme_light
+    let $BAT_THEME=s:wombat_bat_theme_light
   endif
 
   if exists('g:loaded_airline_themes')

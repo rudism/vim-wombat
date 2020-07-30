@@ -69,6 +69,7 @@ function! wombat#refresh()
     let s:wombat.pink=['#d787ff', 177]
     let s:wombat.warning=['#ff5f55', 203]
     let s:wombat.error=['#ff2026', 196]
+    let s:wombat.alterror=['NONE', 196]
     let s:wombat.comment=['#9c998e', 246]
     let s:wombat.altcomment=['#a0a8b0', 103]
 
@@ -128,7 +129,7 @@ function! wombat#refresh()
   call s:HL('SpecialKey', s:wombat.dimforeground, s:wombat.background)
   call s:HL('WarningMsg', s:wombat.warning)
   call s:HL('ErrorMsg', s:wombat.error)
-  call s:HL('Error', s:wombat.none, s:wombat.none, s:wombat.undercurl)
+  call s:HL('Error', s:wombat.alterror, s:wombat.none, s:wombat.undercurl)
 
   if version >= 700
     call s:HL('CursorLine', s:wombat.none, s:wombat.cursorbg)
@@ -165,7 +166,11 @@ function! wombat#refresh()
   hi! link Directory Keyword
 
   hi! link xmlTag Function
-  hi! link xmlTagName Statement
+  hi! link xmlTagName Keyword
+
+  hi! link csModifier Keyword
+  hi! link csStorage Keyword
+  hi! link csNewType Type
 
   if s:wombat_bg == 'dark'
     let g:airline_theme=s:wombat_airline_theme_dark

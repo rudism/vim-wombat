@@ -95,6 +95,7 @@ function! wombat#refresh()
     let s:wombat.pink=['#68009c', 55]
     let s:wombat.warning=['#ff5f55', 203]
     let s:wombat.error=['#ff2026', 196]
+    let s:wombat.alterror=['NONE', 196]
     let s:wombat.comment=['#777368', 242]
     let s:wombat.altcomment=['#727e89', 244]
 

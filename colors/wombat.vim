@@ -164,6 +164,9 @@ function! wombat#refresh()
   hi! link IncSearch Search
   hi! link Directory Keyword
 
+  hi! link xmlTag Function
+  hi! link xmlTagName Statement
+
   if s:wombat_bg == 'dark'
     let g:airline_theme=s:wombat_airline_theme_dark
     let $BAT_THEME=s:wombat_bat_theme_dark

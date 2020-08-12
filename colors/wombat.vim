@@ -134,10 +134,10 @@ function! wombat#refresh()
 
   if version >= 700
     call s:HL('CursorLine', s:wombat.none, s:wombat.cursorbg)
-    call s:HL('MatchParen', s:wombat.highlight2, s:wombat.altforeground)
     call s:HL('Pmenu', s:wombat.altforeground2, s:wombat.altbackground)
     call s:HL('PmenuSel', s:wombat.altbackground2, s:wombat.yellow)
 
+    hi! link MatchParen Search
     hi! link CursorLineNr CursorLine
   endif
 
